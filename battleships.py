@@ -116,7 +116,9 @@ def test_placement(lengthship, origin, orientation, gridboard):
     x = char_convert(origin[0])-1
     y = int(origin[1:])-1
 
-    if (x+lengthship>10) or (y+lengthship>10): # this checks if ship is in given grid boundaries
+    if (x+lengthship>10) and (orientation == "h"):
+        return False
+    elif (y+lengthship>10) and (orientation == "v"): # this checks if ship is in given grid boundaries
         return False
     else:
         for i in range(lengthship):
@@ -139,11 +141,11 @@ def random_board():
         l = shiplength(boat)
         coordinate = random_coord()
         direction = ["v","h"][randint(0,1)]
-        print(coordinate)
+        #print(coordinate)
         while not test_placement(l, coordinate, direction, randomboard):
             coordinate = ["A","B","C","D","E","F","G","H","I","J"][randint(0,9)]+str(randint(1,10))
             direction = ["v","h"][randint(0,1)]
-            print(coordinate)
+            #print(coordinate)
         place_ship(l, boat[0], coordinate, direction, randomboard)
     return randomboard
 
@@ -205,14 +207,15 @@ def main():
             coordinate = raw_input()
             print("Vertically (v) or horizontally (h)?")
             direction = raw_input()
-            while not test_placement(shiplength(boat), coordinate, direction, grid):
+            while not test_placement(shiplength(boat), coordinate, direction, player_board):
                 print("Sorry, can't place that here!")
                 print("So, where do you wanna place your "+boat+"?")
                 coordinate = raw_input()
                 print("Vertically (v) or horizontally (h)?")
                 direction = raw_input()
-            place_ship(shiplength(boat), boat[0], coordinate, direction, grid)
+            place_ship(shiplength(boat), boat[0], coordinate, direction, player_board)
             print(boat+" placed")
+            print_board(player_board, create_board(), "", score_dic_player, fleet_list_player)
     else:
         player_board = random_board()
 
