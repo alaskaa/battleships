@@ -1,4 +1,4 @@
-Console Battleship game in Python 2
+# Console Battleship game in Python 2
 
 This is an implementation of the game battleships in Python 2. To run the game, simply run the file.
 
